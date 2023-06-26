@@ -1,0 +1,16 @@
+
+<div class="flex-container">
+    <div class="flex-child">
+        <div *ngFor="let customer of customers$ | async; let i = index">
+            Id:{{ customer.id }} ,
+            <span [ngStyle]="{ 'background-color': customer.color }"
+              >Customer Name: {{ customer.customerName }}</span
+            >, Active: {{ customer.active }}
+            <button (click)="deleteCustomer(i,customer)">delete</button>
+          </div>
+    </div>
+  
+    <div class="flex-child">
+
+    </div>
+  </div>
