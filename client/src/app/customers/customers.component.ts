@@ -33,7 +33,9 @@ export class CustomersComponent implements OnInit {
   }
 
   deleteCustomer(i,customer){
-    this.store.dispatch(mainActions.deleteCustomer({payload:i}))
+    // this.store.dispatch(mainActions.deleteCustomer({payload:i}))
+    this.store.dispatch(mainActions.deleteEffect({payload:{i:i,type:'customers'}}))
+
   }
 
   add() {

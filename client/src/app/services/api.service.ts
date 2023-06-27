@@ -31,4 +31,15 @@ export class ApiService {
   getAnyNew(type) {
     return this.http.get(environment.api_url + '/getnewany/'+type);
   }
+
+  deleteAny(body) {
+    return this.http.post(
+      environment.api_url + '/deleteany',
+      JSON.stringify(body),
+      {
+        headers: { 'Content-type': 'application/json' },
+        responseType: 'text',
+      }
+    );
+  }
 }

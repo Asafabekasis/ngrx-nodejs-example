@@ -8,6 +8,7 @@ import {
   deleteProduct,
   addCustomerEffect,
   addCustomerAction,
+  deleteCustomer,
 } from './main.actions';
 import { replaceItem,changeActive,removeAt } from "./main.helpers";
 
@@ -28,7 +29,7 @@ export const customersReducer = createReducer(
   on(customersAction, (state, { payload }) => payload),
   on(customerChangeActive, (state, { payload }) => changeActive(state,payload)),
   on(addCustomerAction, (state, { payload }) => [...state, payload]),
-  on(deleteProduct, (state, { payload }) => removeAt(state,payload))
+  on(deleteCustomer, (state, { payload }) => removeAt(state,payload))
 );
 
 // changeActive(state,payload) productChangeActive

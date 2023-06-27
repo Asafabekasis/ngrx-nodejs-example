@@ -109,7 +109,24 @@ this.actions$.pipe(
 )
 );
 
-
+deleteAny$ = createEffect(() =>
+this.actions$.pipe(
+  ofType(mainActions.deleteEffect),
+  tap(() => {
+    // console.log('new product occurred in queue');
+  }),
+  map((action) => action.payload),
+  tap((action) => {
+    console.log(action); 
+  }),
+  mergeMap((action) =>
+    this.apiService.deleteAny(action).pipe(
+      map((res) => action.type ==='customers'?mainActions.deleteCustomer({ payload:action.i}):mainActions.deleteProduct({ payload:action.i})),
+      catchError((error) => EMPTY)
+    )
+  )
+)
+);
 
 ///////////////////////////////////////////////////////
 }

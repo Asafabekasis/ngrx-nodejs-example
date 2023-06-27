@@ -56,24 +56,54 @@ app.get('/getbasiccustomers', function (req, res) {
 })  
 //===========================================================================================================================================================================================================================================================>
 
+// app.post('/writenewany', function (req, res) {
+//     console.log(req.body);
+//    let body = req.body.body;
+//    let target = req.body.target;
+//    target === 'customers'? customers.push(body):products.push(body);
+//    let final = target === 'customers'? customers:products;
+//     fs.writeFile (target+".json", JSON.stringify(final), function(err) {
+//         if (err) throw err;
+//         res.send('complete');
+//         }
+//     );
+// })    
+
 app.post('/writenewany', function (req, res) {
     console.log(req.body);
-   let body = req.body.body;
-   let target = req.body.target;
-   target === 'customers'? customers.push(body):products.push(body);
-   let final = target === 'customers'? customers:products;
-    fs.writeFile (target+".json", JSON.stringify(final), function(err) {
-        if (err) throw err;
-        res.send('complete');
-        }
-    );
+    let body = req.body.body;
+    let target = req.body.target;
+
+    if (fs.existsSync('./'+req.body.target+'.json')) {
+        fs.readFile('./'+req.body.target+'.json', 'utf8', (error, data) => {
+            if(error){
+               console.log(error);
+               return;
+            }
+            data = JSON.parse(data)
+            data.push(body)
+             fs.writeFile (target+".json", JSON.stringify(data), function(err) {
+                 if (err) throw err;
+                 res.send('complete');
+                 }
+             );
+            })
+      }else{
+        target === 'customers'? customers.push(body):products.push(body);
+        let final = target === 'customers'? customers:products;
+        fs.writeFile (target+".json", JSON.stringify(final), function(err) {
+            if (err) throw err;
+            res.send('complete');
+            }
+        );
+      }
 })    
 
 //===========================================================================================================================================================================================================================================================>
 
 app.get('/getnewany/:type', function (req, res) {
     console.log(req.params.type);
-fs.readFile('./'+req.params.type+'.json', 'utf8', (error, data) => {
+    fs.readFile('./'+req.params.type+'.json', 'utf8', (error, data) => { 
     if(error){
        console.log(error);
        return;
@@ -82,4 +112,34 @@ fs.readFile('./'+req.params.type+'.json', 'utf8', (error, data) => {
     })
 }) 
 
+app.post('/deleteany', function (req, res) {
+    let target = req.body.type;
+    console.log(req.body);
+    if (fs.existsSync('./'+req.body.type+'.json')) {
+        fs.readFile('./'+req.body.type+'.json', 'utf8', (error, data) => {
+            if(error){
+               console.log(error);
+               return;
+            }
+            data = JSON.parse(data)
+            data.splice(req.body.i, 1)
+             fs.writeFile (target+".json", JSON.stringify(data), function(err) {
+                 if (err) throw err;
+                 res.send('complete');
+                 }
+             );
+            })
+      }else{
+        target === 'customers'? customers.splice(req.body.i, 1):products.splice(req.body.i, 1);
+        let final = target === 'customers'? customers:products;
+        fs.writeFile (target+".json", JSON.stringify(final), function(err) {
+            if (err) throw err;
+            res.send('complete');
+            }
+        );
+      }
+
+})
+ 
 //===========================================================================================================================================================================================================================================================>
+ 

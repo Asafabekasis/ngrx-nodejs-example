@@ -63,3 +63,8 @@ export const getAnyEffect = createAction(
     props<any>()
 );
 
+export const deleteEffect = createAction(
+  'deleteEffect',
+    props<any>()
+);
+
