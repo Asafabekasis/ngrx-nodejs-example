@@ -1,11 +1,13 @@
 import { createReducer, on } from '@ngrx/store';
 import {
   productsAction,
-  putProductAction,
+  addProductAction,
   customersAction,
   productChangeActive,
   customerChangeActive,
-  deleteProduct
+  deleteProduct,
+  addCustomerEffect,
+  addCustomerAction,
 } from './main.actions';
 import { replaceItem,changeActive,removeAt } from "./main.helpers";
 
@@ -16,18 +18,21 @@ export const defaultCustomers = [];
 export const productsReducer = createReducer(
   defaultProducts,
   on(productsAction, (state, { payload }) => payload),
-  on(putProductAction, (state, { payload }) => [...state, payload]),
-  on(productChangeActive, (state, { payload }) => changeActive(state,payload)),
+  on(productChangeActive, (state, { payload }) => state.map((value, index) => index === payload ? {...value, active: !value.active} : value)),
+  on(addProductAction, (state, { payload }) => [...state, payload]),
   on(deleteProduct, (state, { payload }) => removeAt(state,payload))
 );
 
 export const customersReducer = createReducer(
   defaultCustomers,
   on(customersAction, (state, { payload }) => payload),
-  on(customerChangeActive, (state, { payload }) => changeActive(state,payload))
+  on(customerChangeActive, (state, { payload }) => changeActive(state,payload)),
+  on(addCustomerAction, (state, { payload }) => [...state, payload]),
+  on(deleteProduct, (state, { payload }) => removeAt(state,payload))
 );
 
-// state.map((value, index) => index === payload ? {...value, active: true} : value)
+// changeActive(state,payload) productChangeActive
+//state.map((value, index) => index === payload ? {...value, active: !value.active} : value)
 
 // mutableOn(onAction, (state, action) => {
 //   state.arr[action.index].name = action.name

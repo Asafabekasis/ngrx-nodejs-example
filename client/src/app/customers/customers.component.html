@@ -1,16 +1,30 @@
 
 <div class="flex-container">
     <div class="flex-child">
+      <button (click)="getNew()">get saves</button>
         <div *ngFor="let customer of customers$ | async; let i = index">
             Id:{{ customer.id }} ,
+            Customer Name: 
             <span [ngStyle]="{ 'background-color': customer.color }"
-              >Customer Name: {{ customer.customerName }}</span
+              >{{ customer.customerName }}</span
             >, Active: {{ customer.active }}
             <button (click)="deleteCustomer(i,customer)">delete</button>
           </div>
     </div>
   
     <div class="flex-child">
-
+      <div class="flex-child">
+        <h3>Add New Customer</h3>
+        <form [formGroup]="form" (ngSubmit)="add()">
+          <div>
+            customerName: <input type="text" formControlName="customerName" />
+          </div>
+          <div> Color: <input type="text" formControlName="color" /></div>
+          <div>
+          </div>
+          <div> Id: <input type="text" formControlName="id" /></div>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
     </div>
   </div>

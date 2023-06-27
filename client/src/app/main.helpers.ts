@@ -42,7 +42,7 @@ export function insertAt<T>(source: T[], item: T, index: number): T[] {
     ]
 }
 
-export function changeActive(source, index: number){
+export function changeActive<T>(source: T[], index: number):T[]{
     console.log(source);
     console.log(index);
     let newSource  = JSON.parse(JSON.stringify(source))

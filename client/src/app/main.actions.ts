@@ -11,7 +11,7 @@ export const addProductEffect = createAction(
   '[Main Component put default product',
   props<any>()
 );
-export const putProductAction = createAction(
+export const addProductAction = createAction(
   'main.effect follow Main Component put default product',
   props<any>()
 );
@@ -26,6 +26,8 @@ export const deleteProduct = createAction(
     props<any>()
 );
 
+//============================================================================================================================>
+
 export const getCustomersAction = createAction(
   '[Main Component get customers] customers'
 );
@@ -38,3 +40,26 @@ export const customerChangeActive = createAction(
     'Change Customer Active',
     props<any>()
   );
+
+  export const addCustomerEffect = createAction(
+    'add Customer Effect',
+    props<any>()
+);
+
+export const addCustomerAction = createAction(
+    'add Customer Action',
+    props<any>()
+);
+
+export const deleteCustomer = createAction(
+  'Delete Customer Active',
+    props<any>()
+);
+
+//============================================================================================================================>
+
+export const getAnyEffect = createAction(
+  'Get Type',
+    props<any>()
+);
+

@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import * as mainActions from '../main.actions';
 import { ApiService } from 'src/app/services/api.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-customers',
@@ -15,36 +16,44 @@ export class CustomersComponent implements OnInit {
 
   constructor(
     private store: Store<{ customers: []}>,
-    private _api: ApiService
+    private _api: ApiService,
+    public _fb: FormBuilder
   ) {
     this.customers$ = store.select('customers');
   }
 
+  public form: FormGroup;
+
   ngOnInit(): void {
-
-  }
-
-  edit(i,customer){
-
+    this.form = this._fb.group({
+      customerName: ['', Validators.required],
+      color: ['', Validators.required],
+      id: ['', Validators.required],
+    });
   }
 
   deleteCustomer(i,customer){
-
+    this.store.dispatch(mainActions.deleteCustomer({payload:i}))
   }
 
-  addDefaultFunction() {
+  add() {
+    console.log(this.form.value);
     this.store.dispatch(
-      mainActions.addProductEffect({
-        payload: {
-          id: 33,
-          productName: 'red-bull',
-          color: 'blue',
-          active: true,
-          section: 'drinks',
-          price: 1.9,
-        },
+      mainActions.addCustomerEffect({
+        payload: { ...this.form.value, active: true },
+      })
+    );
+    this.form.reset();
+  }
+
+  getNew(){
+    this.store.dispatch(
+      mainActions.getAnyEffect({
+        payload: 'customers',
       })
     );
   }
+
+  edit(i,customer){}
 
 }

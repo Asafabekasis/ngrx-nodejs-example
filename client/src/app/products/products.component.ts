@@ -33,15 +33,11 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-  edit(i, product) {}
-
   deleteProduct(i, product) {
-
     this.store.dispatch(mainActions.deleteProduct({payload:i}))
-
   }
 
-  addProductFunction() {
+  add() {
     console.log(this.form.value);
     this.store.dispatch(
       mainActions.addProductEffect({
@@ -51,5 +47,14 @@ export class ProductsComponent implements OnInit {
     this.form.reset();
   }
 
-  addDefaultFunction() {}
+  getNew(){
+    this.store.dispatch(
+      mainActions.getAnyEffect({
+        payload: 'products',
+      })
+    );
+  }
+
+  edit(i, product) {}
+
 }

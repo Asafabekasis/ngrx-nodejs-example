@@ -12,9 +12,10 @@ export class ApiService {
     return this.http.get(environment.api_url + '/getbasicproducts');
   }
 
-  addProduct(body: any) {
+  add(body: any,target) {
+    body = {body:body,target:target}
     return this.http.post(
-      environment.api_url + '/writenewproduct',
+      environment.api_url + '/writenewany',
       JSON.stringify(body),
       {
         headers: { 'Content-type': 'application/json' },
@@ -25,5 +26,9 @@ export class ApiService {
 
   getAllCustomers() {
     return this.http.get(environment.api_url + '/getbasiccustomers');
+  }
+
+  getAnyNew(type) {
+    return this.http.get(environment.api_url + '/getnewany/'+type);
   }
 }

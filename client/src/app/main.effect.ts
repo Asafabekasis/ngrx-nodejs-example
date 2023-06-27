@@ -8,6 +8,8 @@ import * as mainActions from './main.actions';
 export class MainEffects {
   constructor(private actions$: Actions, private apiService: ApiService) {}
 
+  //===============================================================================================================>
+
   loadProducts$ = createEffect(() =>
     this.actions$.pipe(
       ofType(mainActions.getProductsAction),
@@ -26,26 +28,6 @@ export class MainEffects {
     )
   );
 
-  loadCustomers$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(mainActions.getCustomersAction),
-      tap(() => {
-        // console.log('new getCustomer occurred in queue');
-      }),
-      exhaustMap(() =>
-        this.apiService.getAllCustomers().pipe(
-          map((customers) =>
-            mainActions.customersAction({ payload: customers })
-          ),
-          tap((customers) => {
-            // console.log(customers);
-          }),
-          catchError(() => EMPTY)
-        )
-      )
-    )
-  );
-
   createProduct$ = createEffect(() =>
     this.actions$.pipe(
       ofType(mainActions.addProductEffect),
@@ -57,11 +39,79 @@ export class MainEffects {
         // console.log(action);
       }),
       mergeMap((product) =>
-        this.apiService.addProduct(product).pipe(
-          map((res) => mainActions.putProductAction({ payload: product })),
+        this.apiService.add(product,'products').pipe(
+          map((res) => mainActions.addProductAction({ payload: product })),
           catchError((error) => EMPTY)
         )
       )
     )
   );
+
+//===============================================================================================================>
+
+  loadCustomers$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(mainActions.getCustomersAction),
+    tap(() => {
+      // console.log('new getCustomer occurred in queue');
+    }),
+    exhaustMap(() =>
+      this.apiService.getAllCustomers().pipe(
+        map((customers) =>
+          mainActions.customersAction({ payload: customers })
+        ),
+        tap((customers) => {
+          // console.log(customers);
+        }),
+        catchError(() => EMPTY)
+      )
+    )
+  )
+);
+
+  createCustomer$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(mainActions.addCustomerEffect),
+    tap(() => {
+      // console.log('new product occurred in queue');
+    }),
+    map((action) => action.payload),
+    tap((action) => {
+      // console.log(action);
+    }),
+    mergeMap((product) =>
+      this.apiService.add(product,'customers').pipe(
+        map((res) => mainActions.addCustomerAction({ payload: product })),
+        catchError((error) => EMPTY)
+      )
+    )
+  )
+);
+
+//===============================================================================================================>
+
+loadAny$ = createEffect(() =>
+this.actions$.pipe(
+  ofType(mainActions.getAnyEffect),
+  tap(() => {
+    // console.log('new product occurred in queue');
+  }),
+  map((action) => action.payload),
+  tap((action) => {
+    // console.log(action);
+  }),
+  mergeMap((type) =>
+    this.apiService.getAnyNew(type).pipe(
+      map((res) => type==='customers'?mainActions.customersAction({ payload:res}):mainActions.productsAction({ payload:res})),
+      catchError((error) => EMPTY)
+    )
+  )
+)
+);
+
+
+
+///////////////////////////////////////////////////////
 }
+
+
