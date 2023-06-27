@@ -103,13 +103,17 @@ app.post('/writenewany', function (req, res) {
 
 app.get('/getnewany/:type', function (req, res) {
     console.log(req.params.type);
-    fs.readFile('./'+req.params.type+'.json', 'utf8', (error, data) => { 
-    if(error){
-       console.log(error);
-       return;
-    }
-    res.send(JSON.parse(data));
-    })
+    if (fs.existsSync('./'+req.params.type+'.json')) {
+        fs.readFile('./'+req.params.type+'.json', 'utf8', (error, data) => { 
+        if(error){
+           console.log(error);
+           return;
+        }
+        res.send(JSON.parse(data));
+        })
+      }else{
+        res.send([])
+      }
 }) 
 
 app.post('/deleteany', function (req, res) {

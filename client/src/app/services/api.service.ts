@@ -29,6 +29,8 @@ export class ApiService {
   }
 
   getAnyNew(type) {
+    console.log('servic',type);
+    
     return this.http.get(environment.api_url + '/getnewany/'+type);
   }
 

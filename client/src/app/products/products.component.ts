@@ -34,7 +34,8 @@ export class ProductsComponent implements OnInit {
   }
 
   deleteProduct(i, product) {
-    this.store.dispatch(mainActions.deleteProduct({payload:i}))
+    // this.store.dispatch(mainActions.deleteProduct({payload:i}))
+    this.store.dispatch(mainActions.deleteEffect({payload:{i:i,type:'products'}}))
   }
 
   add() {

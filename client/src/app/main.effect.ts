@@ -98,7 +98,7 @@ this.actions$.pipe(
   }),
   map((action) => action.payload),
   tap((action) => {
-    // console.log(action);
+    console.log(action);
   }),
   mergeMap((type) =>
     this.apiService.getAnyNew(type).pipe(
