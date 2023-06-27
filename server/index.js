@@ -56,23 +56,30 @@ app.get('/getbasiccustomers', function (req, res) {
 })  
 //===========================================================================================================================================================================================================================================================>
 
-app.post('/writenewproduct', function (req, res) {
+app.post('/writenewany', function (req, res) {
     console.log(req.body);
-    fs.writeFile ("form.json", JSON.stringify(req.body), function(err) {
+   let body = req.body.body;
+   let target = req.body.target;
+   target === 'customers'? customers.push(body):products.push(body);
+   let final = target === 'customers'? customers:products;
+    fs.writeFile (target+".json", JSON.stringify(final), function(err) {
         if (err) throw err;
         res.send('complete');
         }
     );
 })    
 
-app.get('/getnewproducts', function (req, res) {
-fs.readFile('./form.json', 'utf8', (error, data) => {
+//===========================================================================================================================================================================================================================================================>
+
+app.get('/getnewany/:type', function (req, res) {
+    console.log(req.params.type);
+fs.readFile('./'+req.params.type+'.json', 'utf8', (error, data) => {
     if(error){
        console.log(error);
        return;
     }
     res.send(JSON.parse(data));
-})
+    })
 }) 
 
 //===========================================================================================================================================================================================================================================================>
