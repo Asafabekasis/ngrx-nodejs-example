@@ -8,55 +8,48 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
-  styleUrls: ['./products.component.css']
+  styleUrls: ['./products.component.css'],
 })
 export class ProductsComponent implements OnInit {
-
   products$: Observable<any>;
-  
 
   constructor(
-    private store: Store<{ products: []}>,
+    private store: Store<{ products: [] }>,
     private _api: ApiService,
-    public _fb:FormBuilder
+    public _fb: FormBuilder
   ) {
     this.products$ = store.select('products');
   }
 
-  public form:FormGroup
+  public form: FormGroup;
 
   ngOnInit(): void {
-
     this.form = this._fb.group({
-      productName:["",Validators.required],
-      color:["",Validators.required],
-      price:["",Validators.required],
-      section:["",Validators.required],
-      id:["",Validators.required]
-    })
-
+      productName: ['', Validators.required],
+      color: ['', Validators.required],
+      price: ['', Validators.required],
+      section: ['', Validators.required],
+      id: ['', Validators.required],
+    });
   }
 
-  edit(i,product){
+  edit(i, product) {}
 
-  }
+  deleteProduct(i, product) {
 
-  deleteProduct(i,product){
+    this.store.dispatch(mainActions.deleteProduct({payload:i}))
 
   }
 
   addProductFunction() {
     console.log(this.form.value);
-    
     this.store.dispatch(
       mainActions.addProductEffect({
-        payload: {...this.form.value,active:true}
+        payload: { ...this.form.value, active: true },
       })
     );
+    this.form.reset();
   }
 
-  addDefaultFunction() {
-
-  }
-
+  addDefaultFunction() {}
 }

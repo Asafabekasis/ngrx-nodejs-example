@@ -27,12 +27,12 @@ export function replaceAt<T>(source: T[], index: number, item: T): T[] {
     ]
 }
 
-export function removeAt<T>(source: T[], index: number): T[] {
-    return [
-        ...source.slice(0, index), 
-        ...source.slice(index + 1)
-    ]
-}
+// export function removeAt<T>(source: T[], index: number): T[] {
+//     return [
+//         ...source.slice(0, index), 
+//         ...source.slice(index + 1)
+//     ]
+// }
 
 export function insertAt<T>(source: T[], item: T, index: number): T[] { 
     return [
@@ -52,3 +52,12 @@ export function changeActive(source, index: number){
         ...newSource
     ]
 }
+
+export function removeAt<T>(source: T[], index: number): T[] {
+    console.log(source);
+    console.log(index);
+        return [
+            ...source.slice(0, index), 
+            ...source.slice(index + 1)
+        ]
+    }

@@ -21,6 +21,11 @@ export const productChangeActive = createAction(
     props<any>()
   );
 
+export const deleteProduct = createAction(
+  'Delete Product Active',
+    props<any>()
+);
+
 export const getCustomersAction = createAction(
   '[Main Component get customers] customers'
 );
