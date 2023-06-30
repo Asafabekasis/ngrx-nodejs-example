@@ -13,16 +13,21 @@ export class AppComponent {
   title = 'client';
   products$: Observable<any>;
   customers$: Observable<any>;
+  mainheader$: Observable<any>;
 
   constructor(
-    private store: Store<{ products: []; customers: [] }>,
+    private store: Store<any>,
     private _api: ApiService
   ) {
     this.products$ = store.select('products');
     this.customers$ = store.select('customers');
-
+    this.mainheader$ = store.select('mainheader');
+    
     this.store.dispatch(mainActions.getProductsAction());
     this.store.dispatch(mainActions.getCustomersAction());
+    this.store.dispatch(mainActions.groupPageActions.example());
+
+    // this.store.dispatch(mainActions.example())
   }
 
 

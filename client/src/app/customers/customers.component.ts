@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import * as mainActions from '../main.actions';
 import { ApiService } from 'src/app/services/api.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import * as selectors from '../main.selectors'
+
 
 @Component({
   selector: 'app-customers',
@@ -13,6 +15,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class CustomersComponent implements OnInit {
 
   customers$: Observable<any>;
+  customersSelector$: Observable<any>;
+
 
   constructor(
     private store: Store<{ customers: []}>,
@@ -20,6 +24,8 @@ export class CustomersComponent implements OnInit {
     public _fb: FormBuilder
   ) {
     this.customers$ = store.select('customers');
+    this.customersSelector$ = store.select(selectors.selectCustomersList);
+
   }
 
   public form: FormGroup;

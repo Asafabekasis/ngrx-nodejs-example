@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import * as mainActions from '../main.actions';
 import { ApiService } from 'src/app/services/api.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { selectProductsState } from '../main.selectors'
 
 @Component({
   selector: 'app-products',
@@ -12,13 +13,16 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class ProductsComponent implements OnInit {
   products$: Observable<any>;
+  productsSelector$: Observable<any>;
+
 
   constructor(
-    private store: Store<{ products: [] }>,
+    private store: Store<any>,
     private _api: ApiService,
     public _fb: FormBuilder
   ) {
     this.products$ = store.select('products');
+    this.productsSelector$ = store.select(selectProductsState);
   }
 
   public form: FormGroup;
@@ -39,10 +43,11 @@ export class ProductsComponent implements OnInit {
   }
 
   add() {
+    
     console.log(this.form.value);
     this.store.dispatch(
       mainActions.addProductEffect({
-        payload: { ...this.form.value, active: true },
+        payload: { ...this.form.value, active: true,delete:true },
       })
     );
     this.form.reset();

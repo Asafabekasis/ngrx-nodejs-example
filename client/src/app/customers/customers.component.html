@@ -28,3 +28,12 @@
       </div>
     </div>
   </div>
+
+  <h3>this is from selectors</h3>
+  <div *ngFor="let customer of customersSelector$ | async; let i = index">
+    Id:{{ customer.id }} ,
+    Customer Name: 
+    <span [ngStyle]="{ 'background-color': customer.color }"
+      >{{ customer.customerName }}</span
+    >, Active: {{ customer.active }}
+  </div>

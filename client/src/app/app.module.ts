@@ -11,7 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
 import { MainEffects } from './main.effect';
-import { productsReducer, customersReducer } from './main.reducer';
+import { productsReducer, customersReducer,generalReducer,counterReducer,counter2Reducer } from './main.reducer';
 
 @NgModule({
   declarations: [AppComponent, MainComponent, HomeComponent],
@@ -23,8 +23,11 @@ import { productsReducer, customersReducer } from './main.reducer';
     StoreModule.forRoot({
       products: productsReducer,
       customers: customersReducer,
+      mainheader:generalReducer,
+      count: counterReducer,
+      count2: counter2Reducer 
     }),
-    StoreDevtoolsModule.instrument(),
+    StoreDevtoolsModule.instrument({ maxAge: 50 }),
     EffectsModule.forRoot([MainEffects]),
   ],
   providers: [],

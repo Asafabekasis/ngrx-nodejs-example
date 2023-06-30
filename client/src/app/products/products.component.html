@@ -7,7 +7,7 @@
         product.productName
       }}</span>
       , Active: {{ product.active }}, Price: {{ product.price }}
-      <button (click)="deleteProduct(i, product)">delete</button>
+      <button (click)="deleteProduct(i, product)" *ngIf="product?.delete">delete</button>
     </div>
   </div>
 
@@ -26,4 +26,13 @@
       <button type="submit">Submit</button>
     </form>
   </div>
+</div>
+
+<h3>this is from selectors</h3>
+<div *ngFor="let product of productsSelector$ | async; let i = index">
+  Id:{{ product.id }} Product Name:
+  <span [ngStyle]="{ 'background-color': product.color }">{{
+    product.productName
+  }}</span>
+  , Active: {{ product.active }}, Price: {{ product.price }}
 </div>

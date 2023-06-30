@@ -77,11 +77,15 @@ export class MainEffects {
     }),
     map((action) => action.payload),
     tap((action) => {
-      // console.log(action);
+      console.log(action);
     }),
     mergeMap((product) =>
       this.apiService.add(product,'customers').pipe(
         map((res) => mainActions.addCustomerAction({ payload: product })),
+        tap((res) => {
+          console.log(res);
+          console.log('product',product);
+        }),
         catchError((error) => EMPTY)
       )
     )
